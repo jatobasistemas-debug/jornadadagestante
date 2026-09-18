@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-09-16",
+  "project": "jornada-da-gestante",
+  "indexes": 30,
+  "policies": 41,
+  "all_tables": 14,
+  "migrations": [
+    {
+      "name": "foundation",
+      "version": "20260907140419"
+    },
+    {
+      "name": "storage",
+      "version": "20260907140430"
+    },
+    {
+      "name": "access",
+      "version": "20260907140441"
+    },
+    {
+      "name": "stage1_storage_hardening",
+      "version": "20260907141057"
+    }
+  ],
+  "rls_tables": 14,
+  "constraints": 51,
+  "invalid_indexes": 0,
+  "invalid_constraints": 0,
+  "registration_enabled": false,
+  "public_definer_functions": 0,
+  "registration_has_api_grants": false
+}

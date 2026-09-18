@@ -1,0 +1,47 @@
+✖ RLS real: cada gestante só lê seu perfil, gestação, memórias e aceites (13913.553624ms)
+✔ RLS real: equipe e administradores só leem operações de seu tenant (25741.387227ms)
+✔ RLS real: superadmin não lê dados privados ou operacionais de gestantes (12567.480016ms)
+✔ RLS real: alterações de papel, consentimento e auditoria são recusadas (13213.190716ms)
+✔ RLS real: RPC recusa outra clínica, autopromoção e conversão de gestante (15028.667385ms)
+✔ RLS real: revogação de vínculo bloqueia sessão existente imediatamente (451.378907ms)
+✔ RLS real: FK composta e propriedade impedem misturar gestação e clínica (520.304292ms)
+✔ Temas reais: atualização persistente da Vida Plena preserva Horizonte (985.296402ms)
+✔ Auth real: renovação de sessão e refresh revogado após logout (1016.795998ms)
+✔ Storage: remove exclusivamente o arquivo temporário da execução interrompida (17621.763065ms)
+✔ Storage real: logo público e escrita restrita ao administrador do tenant (106389.958167ms)
+✔ Storage real: avatar privado, substituição, perfil e bloqueio de outra proprietária (145170.687283ms)
+✔ Storage real: memórias privadas, caminhos, MIME, edição e exclusão sob RLS (168504.570651ms)
+✔ real Supabase Auth: wrong password rejected, verified user and logout (37125.072692ms)
+✔ real PostgREST RLS: own patient data only (21472.076823ms)
+✔ real PostgREST RLS: clinic staff cannot read memories or cross tenants (32321.322586ms)
+✔ real backend: clinic themes persist independently (20912.331931ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 658668.190127
+
+✖ failing tests:
+
+test at tests/integration/rls-themes.test.ts:2:2195
+✖ RLS real: cada gestante só lê seu perfil, gestação, memórias e aceites (13913.553624ms)
+  AssertionError [ERR_ASSERTION]: ifError got unwanted exception: JWT issued at future
+      at ok (/workspace/scratch/458324eb2847/jornada-da-gestante/tests/integration/rls-themes.test.ts:8:54)
+      at <anonymous> (/workspace/scratch/458324eb2847/jornada-da-gestante/tests/integration/rls-themes.test.ts:12:265)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Promise.all (index 1)
+      at async <anonymous> (/workspace/scratch/458324eb2847/jornada-da-gestante/tests/integration/rls-themes.test.ts:12:154)
+      at async Promise.all (index 1)
+      at async TestContext.<anonymous> (/workspace/scratch/458324eb2847/jornada-da-gestante/tests/integration/rls-themes.test.ts:12:96)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { code: 'PGRST303', details: null, hint: null, message: 'JWT issued at future' },
+    expected: null,
+    operator: 'ifError',
+    diff: 'simple'
+  }

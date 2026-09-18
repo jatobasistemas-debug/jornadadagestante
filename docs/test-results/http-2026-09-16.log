@@ -1,0 +1,41 @@
+HTTP suite: iniciando servidor de produção
+RUN Produção: saúde e página inicial sem erro crítico
+HTTP GET /api/health
+HTTP GET /
+PASS Produção: saúde e página inicial sem erro crítico
+RUN Temas reais renderizados com tokens distintos nas duas clínicas
+HTTP GET /vida-plena
+HTTP GET /clinica-horizonte
+PASS Temas reais renderizados com tokens distintos nas duas clínicas
+RUN Server Action real: login e roteamento por papel
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP GET /acesso
+HTTP GET /acesso
+HTTP GET /acesso
+HTTP GET /acesso
+HTTP GET /acesso
+PASS Server Action real: login e roteamento por papel
+RUN Rotas autenticadas recusam papéis e tenants incorretos
+HTTP GET /vida-plena/clinica/tema
+HTTP GET /clinica-horizonte/gestante
+HTTP GET /vida-plena/clinica/tema
+HTTP GET /vida-plena/clinica
+HTTP GET /jatoba
+HTTP GET /vida-plena/gestante
+PASS Rotas autenticadas recusam papéis e tenants incorretos
+RUN Exportação de Ana contém só dados da titular
+HTTP GET /api/conta/exportar
+PASS Exportação de Ana contém só dados da titular
+RUN Server Action real: upload e remoção de logo
+HTTP GET /vida-plena/clinica/tema
+HTTP POST /vida-plena/clinica/tema
+The operation was aborted due to timeout

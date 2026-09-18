@@ -1,0 +1,77 @@
+HTTP suite: iniciando servidor de produção
+RUN Produção: saúde e página inicial sem erro crítico
+HTTP GET /api/health
+HTTP response 200 /api/health 343ms
+HTTP GET /
+HTTP response 200 / 125ms
+PASS Produção: saúde e página inicial sem erro crítico
+RUN Temas reais renderizados com tokens distintos nas duas clínicas
+HTTP GET /vida-plena
+HTTP GET /clinica-horizonte
+HTTP response 200 /vida-plena 70ms
+HTTP response 200 /clinica-horizonte 71ms
+PASS Temas reais renderizados com tokens distintos nas duas clínicas
+RUN Server Action real: login e roteamento por papel
+HTTP GET /
+HTTP GET /
+HTTP response 200 / 28ms
+HTTP response 200 / 28ms
+HTTP POST /
+HTTP POST /
+HTTP response 303 / 840ms
+HTTP GET /acesso
+HTTP response 303 / 846ms
+HTTP GET /acesso
+HTTP response 200 /acesso 186ms
+HTTP response 200 /acesso 179ms
+PASS Server Action real: login e roteamento por papel
+RUN Server Action real: upload e remoção de logo
+HTTP GET /vida-plena/clinica/tema
+HTTP response 200 /vida-plena/clinica/tema 205ms
+HTTP POST /vida-plena/clinica/tema
+HTTP response 303 /vida-plena/clinica/tema 19652ms
+HTTP GET /vida-plena/clinica/tema?imagem=atualizada
+HTTP response 200 /vida-plena/clinica/tema?imagem=atualizada 236ms
+HTTP GET /vida-plena/clinica/tema
+HTTP response 200 /vida-plena/clinica/tema 163ms
+HTTP POST /vida-plena/clinica/tema
+HTTP response 303 /vida-plena/clinica/tema 19539ms
+HTTP GET /vida-plena/clinica/tema?imagem=removida
+HTTP response 200 /vida-plena/clinica/tema?imagem=removida 162ms
+PASS Server Action real: upload e remoção de logo
+RUN Server Action real: upload e remoção de avatar
+HTTP GET /vida-plena/conta
+HTTP response 200 /vida-plena/conta 169ms
+HTTP POST /vida-plena/conta
+HTTP response 303 /vida-plena/conta 38918ms
+HTTP GET /vida-plena/conta?imagem=atualizada
+HTTP response 200 /vida-plena/conta?imagem=atualizada 230ms
+HTTP GET /vida-plena/conta
+HTTP response 200 /vida-plena/conta 160ms
+HTTP POST /vida-plena/conta
+HTTP response 303 /vida-plena/conta 28992ms
+HTTP GET /vida-plena/conta?imagem=removida
+HTTP response 200 /vida-plena/conta?imagem=removida 162ms
+PASS Server Action real: upload e remoção de avatar
+RUN Server Action real: tema salvo e isolado, com restauração
+HTTP GET /vida-plena/clinica/tema
+HTTP response 200 /vida-plena/clinica/tema 9771ms
+HTTP POST /vida-plena/clinica/tema
+HTTP response 303 /vida-plena/clinica/tema 10864ms
+HTTP GET /vida-plena
+HTTP response 200 /vida-plena 9ms
+HTTP GET /clinica-horizonte
+HTTP response 200 /clinica-horizonte 9ms
+HTTP GET /vida-plena/clinica/tema
+HTTP response 200 /vida-plena/clinica/tema 200ms
+HTTP POST /vida-plena/clinica/tema
+HTTP response 303 /vida-plena/clinica/tema 9943ms
+PASS Server Action real: tema salvo e isolado, com restauração
+RUN Server Action real: logout remove acesso à sessão
+HTTP GET /vida-plena/gestante
+HTTP response 200 /vida-plena/gestante 9734ms
+HTTP POST /vida-plena/gestante
+HTTP response 303 /vida-plena/gestante 9361ms
+HTTP GET /api/conta/exportar
+HTTP response 401 /api/conta/exportar 15ms
+PASS Server Action real: logout remove acesso à sessão

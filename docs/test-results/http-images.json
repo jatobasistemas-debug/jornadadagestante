@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-09-17T00:44:14.481Z",
+  "result": "passed",
+  "checks": [
+    "Produção: saúde e página inicial sem erro crítico",
+    "Temas reais renderizados com tokens distintos nas duas clínicas",
+    "Server Action real: login e roteamento por papel",
+    "Server Action real: upload e remoção de logo",
+    "Server Action real: upload e remoção de avatar",
+    "Server Action real: tema salvo e isolado, com restauração",
+    "Server Action real: logout remove acesso à sessão"
+  ],
+  "browser": false
+}

@@ -1,0 +1,1 @@
+ 'use client';export default function ErrorPage({reset}:{reset:()=>void}){return <main id="conteudo" className="content narrow"><h1>Não foi possível carregar este espaço.</h1><p>Tente novamente em alguns instantes.</p><button onClick={()=>reset()}>Tentar novamente</button></main>;}

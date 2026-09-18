@@ -1,0 +1,1 @@
+import {NextResponse} from 'next/server';import {isConfigured} from '@/lib/config';export function GET(){return NextResponse.json({application:'jornada-da-gestante',stage:1,status:'running',backend:isConfigured()?'configured-not-probed':'not-configured'},{headers:{'Cache-Control':'no-store'}});}

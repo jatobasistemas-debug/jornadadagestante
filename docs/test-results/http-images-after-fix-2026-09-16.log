@@ -1,0 +1,38 @@
+HTTP suite: iniciando servidor de produção
+RUN Produção: saúde e página inicial sem erro crítico
+HTTP GET /api/health
+HTTP response 200 /api/health 256ms
+HTTP GET /
+HTTP response 200 / 95ms
+PASS Produção: saúde e página inicial sem erro crítico
+RUN Temas reais renderizados com tokens distintos nas duas clínicas
+HTTP GET /vida-plena
+HTTP GET /clinica-horizonte
+HTTP response 200 /vida-plena 39ms
+HTTP response 200 /clinica-horizonte 40ms
+PASS Temas reais renderizados com tokens distintos nas duas clínicas
+RUN Server Action real: login e roteamento por papel
+HTTP GET /
+HTTP GET /
+HTTP response 200 / 21ms
+HTTP response 200 / 23ms
+HTTP POST /
+HTTP POST /
+HTTP response 303 / 563ms
+HTTP GET /acesso
+HTTP response 303 / 563ms
+HTTP GET /acesso
+HTTP response 200 /acesso 155ms
+HTTP response 200 /acesso 171ms
+PASS Server Action real: login e roteamento por papel
+RUN Server Action real: upload e remoção de logo
+HTTP GET /vida-plena/clinica/tema
+HTTP response 200 /vida-plena/clinica/tema 156ms
+HTTP POST /vida-plena/clinica/tema
+QA_IMAGE authorized
+QA_IMAGE uploaded
+QA_IMAGE associated
+QA_IMAGE revalidated
+HTTP response 200 /vida-plena/clinica/tema 23630ms
+The operation was aborted due to timeout
+CLEANUP fixture logo

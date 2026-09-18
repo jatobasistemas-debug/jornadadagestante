@@ -1,0 +1,44 @@
+{
+  "stage": 1,
+  "stage_complete": false,
+  "checked_at": "2026-09-17",
+  "runtime_backend": "real_supabase",
+  "migrations": 4,
+  "tables_with_rls": 14,
+  "constraints": 51,
+  "indexes": 30,
+  "policies": 41,
+  "local_tests": {
+    "passed": 35,
+    "failed": 0
+  },
+  "production_build": "passed",
+  "typescript": "passed",
+  "integration_first_run": {
+    "passed": 16,
+    "failed": 1,
+    "error": "PGRST303 JWT issued at future"
+  },
+  "affected_case_rerun": "passed",
+  "rls_after_fixes": {
+    "passed": 7,
+    "failed": 0
+  },
+  "storage_real": {
+    "passed": 4,
+    "failed": 0
+  },
+  "http_forms_real": {
+    "passed": 7,
+    "failed": 0,
+    "browser": false
+  },
+  "http_role_routes": "passed_2026-09-16",
+  "browser_qa": "blocked_by_url_policy",
+  "registration_email": "pending_authorized_test_address",
+  "password_recovery_email": "blocked_pending_authorized_recipient",
+  "account_deletion": "pending_server_service_key",
+  "temporary_storage_objects_remaining": 0,
+  "official_logo_provided": false,
+  "deployed": false
+}

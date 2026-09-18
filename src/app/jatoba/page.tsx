@@ -1,0 +1,2 @@
+import {requireSuperadmin} from '@/lib/access';import {BrandShell} from '@/components/brand-shell';
+export default async function Jatoba(){await requireSuperadmin();return <BrandShell signedIn><main id="conteudo" className="content"><p className="eyebrow">Jatobá Sistemas</p><h1>Acesso da plataforma</h1><section className="panel"><h2>Conta administrativa validada.</h2><p>A base multi-clínica está preparada. O painel de gestão faz parte de uma próxima etapa.</p></section></main></BrandShell>;}

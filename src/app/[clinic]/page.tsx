@@ -1,0 +1,4 @@
+import {publicClinic} from '@/lib/access';
+import {BrandShell} from '@/components/brand-shell';
+import {LoginForm} from '@/components/login-form';
+export default async function ClinicAccess({params}:{params:Promise<{clinic:string}>}){const {clinic:slug}=await params;const clinic=await publicClinic(slug);return <BrandShell clinic={clinic}><main id="conteudo" className="layout"><section className="intro"><p className="eyebrow">Seu espaço de acolhimento</p><h1>Uma jornada sua.<br/>Um cuidado próximo.</h1><p>Bem-vinda à Jornada da Gestante com {clinic.name}.</p><p className="quote">{clinic.slogan||'Primeiro cuidar. Depois oferecer.'}</p>{clinic.city&&<p className="muted">{clinic.city}</p>}</section><section className="panel"><h2>Que bom ter você aqui.</h2><LoginForm/><p>Ainda não tem conta? <a href={`/${clinic.slug}/cadastro`}>Comece por aqui</a>.</p></section></main></BrandShell>;}

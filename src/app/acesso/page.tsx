@@ -1,0 +1,6 @@
+import {requireUser} from '@/lib/access';import {redirect} from 'next/navigation';import {BrandShell} from '@/components/brand-shell';
+export default async function Access(){const {db,user}=await requireUser();const {data:admin,error:adminError}=await db.from('superadmins').select('user_id').eq('user_id',user.id).maybeSingle();if(adminError)throw new Error('Falha ao verificar acesso.');if(admin)redirect('/jatoba');const {data:members,error}=await db.from('clinic_memberships').select('clinic_id,role').eq('user_id',user.id).eq('active',true);if(error)throw new Error('Falha ao verificar vínculos.');
+ // Resolve each tenant through an authenticated RPC so patients cannot read billing fields.
+ const {data:links,error:linksError}=await db.rpc('my_clinic_links');if(linksError)throw new Error('Falha ao carregar seus acessos.');
+ if(links?.length===1)redirect(`/${links[0].slug}/${links[0].role==='patient'?'gestante':'clinica'}`);
+ return <BrandShell signedIn><main id="conteudo" className="content narrow"><h1>Seu espaço</h1><section className="panel stack">{members?.length?links?.map((c:{slug:string;name:string;role:string})=><a className="button secondary" key={c.slug} href={`/${c.slug}/${c.role==='patient'?'gestante':'clinica'}`}>{c.name}</a>):<p>Não há um acesso ativo vinculado à sua conta. Entre em contato com sua clínica.</p>}</section></main></BrandShell>;}

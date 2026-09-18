@@ -1,0 +1,61 @@
+HTTP suite: iniciando servidor de produção
+RUN Produção: saúde e página inicial sem erro crítico
+HTTP GET /api/health
+HTTP response 200 /api/health 255ms
+HTTP GET /
+HTTP response 200 / 90ms
+PASS Produção: saúde e página inicial sem erro crítico
+RUN Temas reais renderizados com tokens distintos nas duas clínicas
+HTTP GET /vida-plena
+HTTP GET /clinica-horizonte
+HTTP response 200 /vida-plena 41ms
+HTTP response 200 /clinica-horizonte 41ms
+PASS Temas reais renderizados com tokens distintos nas duas clínicas
+RUN Server Action real: login e roteamento por papel
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP GET /
+HTTP response 200 / 42ms
+HTTP response 200 / 43ms
+HTTP response 200 / 44ms
+HTTP response 200 / 45ms
+HTTP response 200 / 46ms
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP POST /
+HTTP response 303 / 560ms
+HTTP GET /acesso
+HTTP response 303 / 583ms
+HTTP GET /acesso
+HTTP response 200 /acesso 154ms
+HTTP response 200 /acesso 186ms
+HTTP response 303 / 10396ms
+HTTP GET /acesso
+HTTP response 303 / 10406ms
+HTTP GET /acesso
+HTTP response 303 / 10403ms
+HTTP GET /acesso
+HTTP response 200 /acesso 10875ms
+HTTP response 200 /acesso 10869ms
+HTTP response 200 /acesso 10918ms
+PASS Server Action real: login e roteamento por papel
+RUN Rotas autenticadas recusam papéis e tenants incorretos
+HTTP GET /vida-plena/clinica/tema
+HTTP GET /clinica-horizonte/gestante
+HTTP GET /vida-plena/clinica/tema
+HTTP GET /vida-plena/clinica
+HTTP GET /jatoba
+HTTP GET /vida-plena/gestante
+HTTP response 200 /vida-plena/clinica/tema 149ms
+HTTP response 200 /vida-plena/clinica 11730ms
+HTTP response 200 /clinica-horizonte/gestante 11742ms
+HTTP response 200 /vida-plena/gestante 11745ms
+HTTP response 200 /jatoba 11782ms
+HTTP response 200 /vida-plena/clinica/tema 11842ms
+PASS Rotas autenticadas recusam papéis e tenants incorretos
+RUN Exportação de Ana contém só dados da titular
+HTTP GET /api/conta/exportar

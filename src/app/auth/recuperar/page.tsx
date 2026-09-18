@@ -1,0 +1,2 @@
+import {BrandShell} from '@/components/brand-shell';import {RecoveryForm} from '@/components/recovery-form';
+export default async function Recover({searchParams}:{searchParams:Promise<{erro?:string}>}){const {erro}=await searchParams;return <BrandShell><main id="conteudo" className="content narrow"><h1>Vamos recuperar seu acesso.</h1><section className="panel">{erro&&<p role="alert" className="error">Esse link não está mais disponível. Solicite outro abaixo.</p>}<RecoveryForm/><p><a href="/">Voltar para o acesso</a></p></section></main></BrandShell>;}

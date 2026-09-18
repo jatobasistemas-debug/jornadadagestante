@@ -1,0 +1,1 @@
+import {requireUser} from '@/lib/access';import {BrandShell} from '@/components/brand-shell';import {RecoveryForm} from '@/components/recovery-form';export default async function NewPassword(){await requireUser();return <BrandShell><main id="conteudo" className="content narrow"><h1>Sua nova senha</h1><section className="panel"><RecoveryForm reset/></section></main></BrandShell>;}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-09-16T00:20:39.668Z",
+  "result": "failed",
+  "checks": [
+    "Produção: saúde e página inicial sem erro crítico",
+    "Temas reais renderizados com tokens distintos nas duas clínicas",
+    "Server Action real: login e roteamento por papel",
+    "Rotas autenticadas recusam papéis e tenants incorretos",
+    "Exportação de Ana contém só dados da titular"
+  ],
+  "error": "The operation was aborted due to timeout",
+  "browser": false
+}

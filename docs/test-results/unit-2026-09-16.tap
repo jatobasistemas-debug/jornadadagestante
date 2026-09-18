@@ -1,0 +1,48 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> jornada-da-gestante@0.1.0 test
+> node --import tsx --test tests/*.test.ts
+
+✔ all public tables have RLS enabled (1807.7504ms)
+✔ anonymous cannot query clinic tables (4.749275ms)
+✔ public branding exposes only active clinic identity, never billing (3.564029ms)
+✔ registration ignores forged privilege metadata (6.168482ms)
+✔ registration creates pregnancy and all versioned consents atomically (2.25615ms)
+✔ invalid signup rolls back the auth user and profile (3.218102ms)
+✔ database gate blocks direct signup while enrollment is disabled (1.734979ms)
+✔ patient sees only own pregnancy, including within same clinic (3.305128ms)
+✔ clinic staff can read operations only from their tenant (6.049655ms)
+✔ other clinic admin only sees the other clinic (3.044755ms)
+✔ private memories hidden from same-clinic patients, team, admins and superadmin (13.028426ms)
+✔ staff cannot read patient profiles or consent records (5.970519ms)
+✔ forged memory owner and clinic/pregnancy relation are rejected (4.81099ms)
+✔ patient cannot move memory to another owner (2.8572ms)
+✔ only clinic admin can change own theme and it persists (14.910085ms)
+✔ invalid CSS injection and incomplete tokens are rejected in database (6.458676ms)
+✔ theme clinic id cannot be changed (1.849016ms)
+✔ no raw privilege escalation or consent tampering (7.674372ms)
+✔ staff role RPC refuses cross-tenant, self and patient conversion (16.660758ms)
+✔ staff assignment works within authorized tenant (7.374587ms)
+✔ theme update generates audit without private payloads (2.747979ms)
+✔ storage objects private to their owner including against superadmin (14.883076ms)
+✔ suspension revokes current tenant access without relying on JWT role claims (22.98638ms)
+✔ revoked membership loses private access immediately (5.793729ms)
+✔ superadmin can manage clinic status but cannot see patient operational records (5.890341ms)
+✔ deleting an Auth user cascades profiles, pregnancies, consent and private memories (9.279659ms)
+✔ storage policy rejects nested and malformed paths (19.383218ms)
+✔ upload preserves original PNG bytes (3.032306ms)
+✔ upload rejects HTML/SVG renamed as PNG (0.85925ms)
+✔ upload rejects empty, missing and oversized images (8.408543ms)
+✔ default theme passes contrast checks and all tokens map to CSS variables (3.31302ms)
+✔ theme rejects unsafe values, missing and extra tokens (1.000298ms)
+✔ reject unreadable button contrast (0.149699ms)
+✔ auth callback blocks open redirects and encoded redirects (0.121855ms)
+✔ short registration enforces consent, dates and password strength (3.438417ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3186.558569

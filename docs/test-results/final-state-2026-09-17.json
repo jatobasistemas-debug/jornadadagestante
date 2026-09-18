@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-09-17",
+  "users": 7,
+  "themes": [
+    {
+      "slug": "vida-plena",
+      "primary": "#805044",
+      "logo_url": null
+    },
+    {
+      "slug": "clinica-horizonte",
+      "primary": "#315D58",
+      "logo_url": null
+    }
+  ],
+  "indexes": 30,
+  "ana_role": "patient",
+  "ana_active": true,
+  "migrations": 4,
+  "constraints": 51,
+  "pregnancies": 3,
+  "staff_active": true,
+  "storage_objects": 0,
+  "tables_with_rls": 14,
+  "avatars_associated": 0
+}

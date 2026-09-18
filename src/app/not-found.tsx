@@ -1,0 +1,1 @@
+import {BrandShell} from '@/components/brand-shell';export default function NotFound(){return <BrandShell><main id="conteudo" className="content narrow"><h1>Este espaço não está disponível.</h1><p>Confira o endereço enviado pela sua clínica ou entre com sua conta.</p><a className="button" href="/">Voltar ao acesso</a></main></BrandShell>;}
