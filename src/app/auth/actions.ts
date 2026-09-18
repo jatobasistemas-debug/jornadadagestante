@@ -4,6 +4,7 @@ import {supabaseServer} from '@/lib/supabase/server';
 import {loginSchema,signupSchema,passwordSchema} from '@/lib/validation';
 import {appUrl,isConfigured} from '@/lib/config';
 import {requireUser} from '@/lib/access';
+import {signupDiagnostic} from '@/lib/auth-diagnostics';
 export type ActionState={error?:string;success?:string};
 export async function login(_:ActionState,form:FormData):Promise<ActionState>{
  const parsed=loginSchema.safeParse(Object.fromEntries(form));if(!parsed.success)return {error:'Confira o e-mail e a senha.'};
@@ -17,7 +18,11 @@ export async function signup(_:ActionState,form:FormData):Promise<ActionState>{
  const p=signupSchema.safeParse(Object.fromEntries(form));if(!p.success)return {error:p.error.issues[0]?.message==='Confira a data informada.'?'Confira a data informada.':'Confira os campos e os três aceites. A senha precisa ter ao menos 10 caracteres.'};
  const v=p.data;const db=await supabaseServer();
  const {error}=await db.auth.signUp({email:v.email,password:v.password,options:{emailRedirectTo:`${appUrl()}/auth/callback`,data:{full_name:v.full_name,clinic_slug:v.clinic_slug,[v.date_type]:v.date,terms_version:'2026-09-06',privacy_version:'2026-09-06',sensitive_consent:true}}});
- if(error)return {error:'Não foi possível concluir o cadastro. Confira os dados ou tente novamente mais tarde.'};
+ if(error){
+  // Temporary server-side diagnostics; keep the public response generic.
+  console.error(signupDiagnostic(error,[v.email,v.password,v.full_name,v.date]));
+  return {error:'Não foi possível concluir o cadastro. Confira os dados ou tente novamente mais tarde.'};
+ }
  return {success:'Confira sua caixa de entrada para confirmar o e-mail. Se já possui uma conta, entre ou recupere sua senha.'};
 }
 export async function recover(_:ActionState,form:FormData):Promise<ActionState>{
