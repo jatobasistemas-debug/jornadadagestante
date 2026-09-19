@@ -7,6 +7,7 @@ import {contextualServices} from '@/lib/contextual-services';
 import {homeWeeks} from '@/content/home-weeks';
 import {publishedWeek} from '@/content/gestation-weeks';
 import {BabyDevelopmentMap} from '@/components/baby-development-map';
+import {LatestMemory} from '@/components/latest-memory';
 export default async function Patient({params}:{params:Promise<{clinic:string}>}){
  const {clinic:slug}=await params;const {clinic,active,age,name,services}=await patientJourney(slug);
  const copy=age?homeWeeks[age.week]:undefined;
@@ -24,6 +25,7 @@ export default async function Patient({params}:{params:Promise<{clinic:string}>}
    <section className="home-card observe-card" aria-label="Para observar"><p className="eyebrow">03 · Para observar</p><h2>Escute o seu momento.</h2>{age&&age.week>=16?<><p>Os primeiros movimentos costumam ser percebidos entre 16 e 24 semanas. Se ainda não os percebeu até a semana 24, converse com a equipe do pré-natal.</p><p>Se o bebê se movimentar menos, parar de se movimentar ou mudar seu padrão habitual, procure sua equipe ou maternidade imediatamente. Não espere até o dia seguinte.</p><a className="home-source" href="https://www.nhs.uk/pregnancy/keeping-well/your-babys-movements/" target="_blank" rel="noreferrer">Fonte: NHS · Movimentos do bebê (em inglês) ↗</a></>:<p>Alguma mudança trouxe preocupação? Converse com a equipe do pré-natal. Você não precisa descobrir sozinha o que ela significa.</p>}<p className="home-note">Informação educativa, sem diagnóstico. Não substitui atendimento profissional.</p></section>
    <section className="home-card keep-card" aria-label="Para guardar"><p className="eyebrow">04 · Para guardar</p><h2>{copy?.question??'O que você gostaria de lembrar destes dias?'}</h2><p>Uma frase, um gesto, um instante. Ou apenas viver o momento. Guardar uma memória é sempre uma escolha sua.</p><p className="home-note"><Link className="home-source" href={`/${slug}/gestante/jornada/novo`}>Guardar algumas palavras</Link></p></section>
   </div></>}
+  <LatestMemory slug={slug}/>
   <section className="home-care" aria-label="Seu cuidado"><div><p className="eyebrow">05 · Seu cuidado</p><h2>Perto de quem cuida.</h2><p>Conte com {clinic.name} para conversar sobre o cuidado que faz sentido para você.</p></div><ContextualServices services={related} emptyMessage={age?'Não há serviços relacionados para exibir nesta semana.':'Seu perfil e suas informações de privacidade estão disponíveis no menu Perfil.'}/></section>
  </main></PatientShell>;
 }

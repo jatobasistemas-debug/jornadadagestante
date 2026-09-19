@@ -21,5 +21,7 @@ export async function createJourneyRecord(slug:string,_previous:RecordFormState,
       return {error:'Não foi possível confirmar este registro. Seu texto continua aqui.'};
   }
   revalidatePath(`/${slug}/gestante/jornada`);
+  revalidatePath(`/${slug}/gestante/memorias`);
+  revalidatePath(`/${slug}/gestante`);
   redirect(`/${slug}/gestante/jornada?guardado=1`);
 }

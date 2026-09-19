@@ -10,7 +10,7 @@ export default async function Journal({params,searchParams}:{params:Promise<{cli
   const {db,user,clinic,pregnancy}=await journalContext(slug);
   const offset=(page-1)*JOURNEY_PAGE_SIZE;
   const result=await db.from('private_memories').select('id,category,body,occurred_on,gestational_week')
-    .eq('user_id',user.id).eq('clinic_id',clinic.id).in('category',timelineCategories).is('storage_path',null)
+    .eq('user_id',user.id).eq('clinic_id',clinic.id).in('category',timelineCategories)
     .order('occurred_on',{ascending:false}).order('created_at',{ascending:false}).order('id',{ascending:false})
     .range(offset,offset+JOURNEY_PAGE_SIZE);
   if(result.error) throw new Error('Não foi possível carregar seus registros. Tente novamente.');
@@ -23,7 +23,7 @@ export default async function Journal({params,searchParams}:{params:Promise<{cli
       <p className="journey-privacy">Seus registros são privados. A clínica não tem acesso a eles.</p>
     </section>
     {query.guardado==='1'&&<p className="message" role="status">Seu registro foi guardado, só para você.</p>}
-    {records.length>0?<JourneyTimeline records={records}/>:page===1?<JourneyEmpty hasActive={Boolean(pregnancy)}/>:<p className="journey-empty">Não há mais registros nesta página.</p>}
+    {records.length>0?<JourneyTimeline records={records} slug={slug}/>:page===1?<JourneyEmpty hasActive={Boolean(pregnancy)}/>:<p className="journey-empty">Não há mais registros nesta página.</p>}
     {(page>1||hasNext)&&<nav className="journey-pagination" aria-label="Páginas da sua Jornada">
       {page>1&&<Link href={`/${slug}/gestante/jornada?pagina=${page-1}`}>Registros mais recentes</Link>}
       {hasNext&&<Link href={`/${slug}/gestante/jornada?pagina=${page+1}`}>Registros anteriores</Link>}

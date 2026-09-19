@@ -41,13 +41,13 @@ test('timeline renders dates, week zero, unknown week and legacy moments without
  assert.ok(html.includes('Memória'));assert.ok(html.includes('Marco'));assert.match(html,/datetime="2026-09-19"/i);
  assert.ok(!html.includes('<script>'));assert.ok(html.includes('&lt;script&gt;'));
 });
-test('empty journey is optional and navigation enables only the authorized new destination',()=>{
+test('empty journey is optional and navigation enables the five authorized destinations',()=>{
  const empty=renderToStaticMarkup(createElement(JourneyEmpty,{hasActive:true}));
  assert.ok(empty.includes('Sua história começa'));assert.ok(empty.includes('quando você quiser'));
  const inactive=renderToStaticMarkup(createElement(JourneyEmpty,{hasActive:false}));assert.ok(inactive.includes('Não há uma gestação ativa'));
  const nav=renderToStaticMarkup(createElement(PatientNavigation,{slug:'vida-plena',current:'gestante/jornada'}));
  assert.match(nav,/<a(?=[^>]*aria-current="page")(?=[^>]*href="\/vida-plena\/gestante\/jornada")[^>]*>/);
- assert.ok(!nav.includes('/memorias'));assert.ok(!nav.includes('/cartas'));
+ assert.ok(nav.includes('/gestante/memorias'));assert.ok(nav.includes('/gestante/clinica'));assert.ok(!nav.includes('Em breve'));
 });
 test('pagination refuses malformed values and keeps a bounded offset',()=>{
  assert.equal(journeyPage('2'),2);for(const value of [undefined,'-1','1.5','2e2','0','100000','01'])assert.equal(journeyPage(value),1);

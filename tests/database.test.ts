@@ -52,14 +52,19 @@ test('superadmin can manage clinic status but cannot see patient operational rec
 test('deleting an Auth user cascades profiles, pregnancies, consent and private memories',async()=>{await db.query('delete from auth.users where id=$1',[lu]);for(const table of ['profiles','clinic_memberships','pregnancies','consent_records','private_memories'])assert.equal((await db.query(`select * from public.${table} where user_id=$1`,[lu])).rows.length,0);});
 test('storage policy rejects nested and malformed paths',async()=>{await rejects(ana,"insert into storage.objects(bucket_id,name) values('private-memories',$1)",[`${a}/${ana}/${pregnancyA}/nested/file.png`]);for(const path of ['', 'invalid/a/b/c','../../a/b'])assert.equal((await as(ana,tx=>tx.query('select private.owns_storage_path($1) as allowed',[path]))).rows[0].allowed,false);});
 
-test('journey diary, memory and milestone remain owner-only with real date and week columns',async()=>{
- for(const category of ['diary','memory','milestone']) {
+test('all memory categories support private CRUD and preserve ownership',async()=>{
+ for(const category of ['diary','memory','milestone','photo','ultrasound','letter','moment']) {
   const inserted=await as(ana,tx=>tx.query('insert into public.private_memories(clinic_id,user_id,pregnancy_id,category,body,occurred_on,gestational_week) values($1,$2,$3,$4,$5,$6,$7) returning id,occurred_on,gestational_week',[a,ana,pregnancyA,category,'Texto privado','2026-09-18',20]));
   const id=inserted.rows[0].id;
   assert.equal(inserted.rows[0].gestational_week,20);
-  for(const uid of [bia,admin,staff,otherAdmin,superadmin])assert.equal((await as(uid,tx=>tx.query('select body from public.private_memories where id=$1',[id]))).rows.length,0);
+  for(const uid of [bia,admin,staff,otherAdmin,superadmin]){
+   assert.equal((await as(uid,tx=>tx.query('select body from public.private_memories where id=$1',[id]))).rows.length,0);
+   assert.equal((await as(uid,tx=>tx.query("update public.private_memories set body='intrusion' where id=$1 returning id",[id]))).rows.length,0);
+   assert.equal((await as(uid,tx=>tx.query('delete from public.private_memories where id=$1 returning id',[id]))).rows.length,0);
+  }
   assert.equal((await as(ana,tx=>tx.query('select body from public.private_memories where id=$1',[id]))).rows[0].body,'Texto privado');
-  await as(ana,tx=>tx.query('delete from public.private_memories where id=$1',[id]));
+  assert.equal((await as(ana,tx=>tx.query("update public.private_memories set body='Revisto' where id=$1 returning body",[id]))).rows[0].body,'Revisto');
+  assert.equal((await as(ana,tx=>tx.query('delete from public.private_memories where id=$1 returning id',[id]))).rows.length,1);
  }
  await rejects(ana,'insert into public.private_memories(clinic_id,user_id,pregnancy_id,category,gestational_week) values($1,$2,$3,$4,$5)',[a,ana,pregnancyA,'milestone',43]);
  await rejects(ana,'insert into public.private_memories(clinic_id,user_id,pregnancy_id,category) values($1,$2,$3,$4)',[a,ana,pregnancyA,'unsupported']);

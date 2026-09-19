@@ -1,13 +1,14 @@
 import {recordDateLabel,recordLabel,type JourneyRecord} from '@/lib/journey-records';
+import Link from 'next/link';
 
-export function JourneyTimeline({records}:{records:JourneyRecord[]}) {
+export function JourneyTimeline({records,slug}:{records:JourneyRecord[];slug?:string}) {
   return <ol className="journey-timeline" aria-label="Seus registros, do mais recente ao mais antigo">
     {records.map(record=><li key={record.id} className={`journey-entry journey-entry-${record.category}`}>
       <article aria-labelledby={`record-${record.id}`}>
         <div className="journey-entry-date"><time dateTime={record.occurred_on}>{recordDateLabel(record.occurred_on)}</time>
           <span>{record.gestational_week===null?'Semana não estimada':`Semana ${record.gestational_week}`}</span></div>
         <div className="journey-entry-copy"><h2 id={`record-${record.id}`}>{recordLabel(record.category)}</h2>
-          <p>{record.body || 'Um momento guardado.'}</p></div>
+          <p>{record.body ? record.body.slice(0,2000)+(record.body.length>2000?'…':'') : 'Um momento guardado.'}</p>{slug&&<Link href={`/${slug}/gestante/memorias/${record.id}`}>Abrir registro</Link>}</div>
       </article>
     </li>)}
   </ol>;
