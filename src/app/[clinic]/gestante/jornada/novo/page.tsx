@@ -3,7 +3,7 @@ import {PatientShell} from '@/components/patient-shell';
 import {JourneyRecordForm} from '@/components/journey-record-form';
 import {journalContext} from '@/lib/journey-records-server';
 import {journeyToday} from '@/lib/journey-records';
-export const metadata={title:'Novo registro | Jornada da Gestante'};
+export const metadata={title:'Novo registro'};
 export default async function NewJournalRecord({params}:{params:Promise<{clinic:string}>}) {
   const {clinic:slug}=await params;
   const {clinic,pregnancy}=await journalContext(slug);

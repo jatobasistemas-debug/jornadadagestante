@@ -3,7 +3,7 @@ import {PatientShell} from '@/components/patient-shell';
 import {JourneyEmpty,JourneyTimeline} from '@/components/journey-timeline';
 import {journalContext} from '@/lib/journey-records-server';
 import {journeyPage,JOURNEY_PAGE_SIZE,timelineCategories,type JourneyRecord} from '@/lib/journey-records';
-export const metadata={title:'Minha Jornada | Jornada da Gestante'};
+export const metadata={title:'Minha Jornada'};
 export default async function Journal({params,searchParams}:{params:Promise<{clinic:string}>;searchParams:Promise<{pagina?:string;guardado?:string}>}) {
   const {clinic:slug}=await params;
   const query=await searchParams, page=journeyPage(query.pagina);
