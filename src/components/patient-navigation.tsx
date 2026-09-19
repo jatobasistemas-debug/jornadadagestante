@@ -1,5 +1,5 @@
 import Link from 'next/link';
-const items=[['Início','gestante','M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10'],['Minha Jornada','','M6 4v16M10 5h9M10 12h7M10 19h9'],['Memórias','','M4 5h16v15H4zM4 15l5-5 5 5 3-3 3 3'],['Minha Clínica','','M5 21V4h14v17M3 21h18M9 8h6M12 5v6'],['Perfil','conta','M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21v-2a8 8 0 0 1 16 0v2']];
-export function PatientNavigation({slug,current}:{slug:string;current:'gestante'|'conta'}){
+const items=[['Início','gestante','M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10'],['Minha Jornada','gestante/jornada','M6 4v16M10 5h9M10 12h7M10 19h9'],['Memórias','','M4 5h16v15H4zM4 15l5-5 5 5 3-3 3 3'],['Minha Clínica','','M5 21V4h14v17M3 21h18M9 8h6M12 5v6'],['Perfil','conta','M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21v-2a8 8 0 0 1 16 0v2']];
+export function PatientNavigation({slug,current}:{slug:string;current:'gestante'|'gestante/jornada'|'conta'}){
  return <nav className="patient-nav" aria-label="Navegação da gestante"><ul>{items.map(([label,path,icon])=>{const content=<><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={icon}/></svg><span>{label}</span></>;return <li key={label}>{path?<Link href={`/${slug}/${path}`} aria-current={current===path?'page':undefined}>{content}</Link>:<span className="nav-pending" aria-disabled="true">{content}<small>Em breve</small></span>}</li>;})}</ul></nav>;
 }
