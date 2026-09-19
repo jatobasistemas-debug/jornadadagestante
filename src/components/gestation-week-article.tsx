@@ -3,6 +3,7 @@ import type {PublishedWeek} from '@/content/gestation-weeks';
 import type {ClinicService} from '@/lib/contextual-services';
 import {GestationProgress, type GestationalAge} from './gestation-progress';
 import {ContextualServices} from './contextual-services';
+import {BabyDevelopmentMap} from './baby-development-map';
 
 export function GestationWeekArticle({week, content, slug, clinicName, name, age, dueDate, hasActive, services}: {
   week: number; content: PublishedWeek; slug: string; clinicName: string; name: string;
@@ -30,6 +31,8 @@ export function GestationWeekArticle({week, content, slug, clinicName, name, age
         <div className="week-section-heading"><p className="week-label">Seu bebê</p><h2 id="baby-title">{detail.babyTitle}</h2></div>
         <div className="week-prose"><p>{content.baby}</p><a className="week-reference" href="#source-week20">Fonte: desenvolvimento na semana {week}</a></div>
       </section>
+
+      <BabyDevelopmentMap currentWeek={age?.week ?? null} referenceWeek={week}/>
 
       <div className="week-pair">
         <section className="week-you" aria-labelledby="you-title">

@@ -97,3 +97,16 @@ Este documento tem prioridade sobre decisões improvisadas durante o desenvolvim
 58. WhatsApp automático não faz parte da V1.
 59. Ads podem ser oferecidos separadamente.
 60. Domínio oficial: jornadadagestante.online.
+
+## Atualização autorizada — 19/09/2026
+
+61. Modelo híbrido: acesso patrocinado por clínica/parceiro e assinatura direta individual. O acesso patrocinado é gratuito para a gestante vinculada.
+62. Entrada futura com “Começar minha Jornada” e “Tenho acesso por uma clínica/parceiro”; link/QR/código deverá associar a clínica correta. Nesta rodada, somente preparação visual e preservação dos caminhos existentes.
+63. Planos individuais configuráveis: R$ 19,90 mensal; campanha aproximada R$ 11/mês por 3 meses; opções 3/6/9 meses; anual R$ 149–159. Sem cobrança/gateway agora. Referências 56 e 57 pertencem ao modelo B2B anterior e não limitam nem definem os novos planos individuais.
+64. Todo tema tem tokens light/dark; preferência inicial do sistema, troca manual persistente e retorno ao sistema. Nenhuma cor literal em componentes.
+65. Mapa Visual do Desenvolvimento do Bebê: semanas 1–40, estágio atual destacado, exploração de semanas futura; referência visual somente da Semana 20 nesta rodada.
+66. Conteúdo anatômico central Jatobá com fontes e revisão profissional possível; não inventar informações médicas nem confundir semana ilustrada com a gestação real.
+67. Acompanhante gratuito convidado, futuro, sem acesso automático a diário, cartas, fotos ou memórias privadas.
+68. Resumo Semanal, futuro, preferencialmente domingo, preparado conceitualmente para e-mail/WhatsApp, sem automações agora.
+69. Minha Jornada como diário/cápsula do tempo e pós-parto/recém-nascido até cerca de 90 dias ficam futuros; registros pessoais continuam opcionais.
+70. Roadmap não autoriza implementação: comunidade privada moderada, radar, indicações, WhatsApp, pagamentos, campanhas, pós-parto. Rodada atual restrita ao acabamento Home/Semana 20, temas claro/escuro, mapa de referência, estrutura editorial 1–40 e entrada pública visual. Não reabrir Auth, RLS, multi-tenancy ou etapas concluídas.

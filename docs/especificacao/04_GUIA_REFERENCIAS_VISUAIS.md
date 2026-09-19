@@ -116,3 +116,11 @@ Mesmo quando as cores mudarem para combinar com a clínica, manter:
 ## Princípio de design
 
 > A tecnologia deve desaparecer para que a experiência apareça.
+
+## Direção complementar aprovada — 19/09/2026
+
+- Modos light/dark são duas expressões da mesma identidade da clínica. Preservar hierarquia, espaços, contraste e legibilidade em ambos. Respeitar o sistema inicialmente, com escolha manual persistente.
+- A paleta do banco continua íntegra como light. A adaptação dark central por tokens preserva a cor da clínica; não criar cores literais em componentes nem filtros que alterem logos originais.
+- Home e Semana 20 mantêm composição editorial com ritmos diferentes entre bebê, gestante, curiosidade, observar, guardar e cuidado. Evitar uma grade de cards idênticos.
+- Mapa Visual: escala semanal 1–40 legível no celular, semana real identificada por texto e forma, não apenas por cor. Referência esquemática Semana 20, sem escala nem pretensão de representação clínica individual. Nenhuma nova logo será criada.
+- Reservar espaço para as duas entradas públicas. Identificar com clareza recursos ainda indisponíveis, sem botões que prometam cadastro direto, pagamento ou código de parceiro ainda inexistentes.

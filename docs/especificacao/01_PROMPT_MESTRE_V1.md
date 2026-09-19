@@ -5,7 +5,7 @@
 
 ## Objetivo
 
-Construir uma aplicação web premium, responsiva e mobile-first para ser vendida a clínicas, centros médicos, obstetras, clínicas de ultrassonografia e empresas que atendem gestantes.
+Construir uma aplicação web premium, responsiva e mobile-first com acesso patrocinado por clínicas/parceiros e assinatura direta pela gestante, conforme atualização oficial da seção 31.
 
 O produto **não é um prontuário médico**.
 
@@ -809,10 +809,46 @@ Antes de adicionar complexidade, preservar:
 **ÚTIL PARA A CLÍNICA.**  
 **ESCALÁVEL PARA A JATOBÁ.**
 
-Comece pela ETAPA 1.
+A Etapa 1 foi concluída. Continue apenas o incremento autorizado da Etapa 2, conforme seção 31.
 
 Primeiro apresente brevemente a arquitetura técnica e a estrutura de banco que será criada.
 
 Em seguida, implemente.
 
 Não pare apenas em explicações.
+
+## 31. Decisões oficiais e escopo aprovado — 19/09/2026
+
+Esta atualização substitui a premissa de venda exclusivamente à clínica. As demais regras continuam vigentes.
+
+### Modelo híbrido e entrada pública
+
+- Acesso patrocinado por clínica/parceiro, gratuito para a gestante vinculada, e assinatura direta pela gestante.
+- A entrada pública deverá oferecer “Começar minha Jornada” e “Tenho acesso por uma clínica/parceiro”.
+- Link, QR Code ou código de parceiro deverão futuramente associar automaticamente a gestante à clínica correta. Não criar tenant fictício, atalho de permissões nem associação confiada a dados editáveis pelo cliente. Nesta rodada, preservar os links de clínica existentes e preparar apenas a composição visual; novo cadastro direto e resgate de código ficam futuros.
+- Planos individuais configuráveis: mensal de referência R$ 19,90; campanha inicial de aproximadamente R$ 11/mês nos primeiros 3 meses; opções de 3, 6 e 9 meses; anual na faixa R$ 149–159. Preços são referências comerciais, não constantes de cobrança nem ofertas ativas. Gateway, cobrança e configuração administrativa dos planos não serão implementados agora. As referências comerciais B2B anteriores não são preços dos planos individuais.
+
+### Claro e escuro
+
+Cada tema de clínica possui tokens light/dark. Respeitar a preferência do sistema inicialmente e oferecer troca manual persistente, com opção de voltar ao sistema. Cores somente em tokens, nunca diretamente nos componentes. Manter contraste e identidade de cada clínica. Compatibilidade nesta rodada: tokens existentes do banco permanecem como light; um adaptador central deriva dark para cada paleta, sem migração ou alteração do editor de clínica. O contrato admite pares explícitos light/dark; edição e persistência independente de dark no banco exigirão rodada própria.
+
+### Mapa Visual do Desenvolvimento do Bebê
+
+- Arquitetura central para semanas 1–40, estágio atual destacado e futura navegação entre semanas.
+- Conteúdo anatômico sob responsabilidade editorial da Jatobá, com fontes, estado de publicação e revisão profissional rastreáveis. Não inventar informações médicas nem apresentar revisão pendente como aprovada.
+- Nesta rodada, somente componente visual de referência da Semana 20. Diferenciar semana ilustrada e semana gestacional real; não recalcular nem alterar a gestação para coincidir com a referência. Ilustração esquemática, sem escala, sem inferir anatomia individual ou simular ultrassom. Sem conteúdo disponível, informar isso explicitamente.
+
+### Evolução conceitual, sem implementação nesta rodada
+
+- Continuidade até aproximadamente 90 dias após o nascimento, com pós-parto e recém-nascido. Pausar/encerrar a jornada continua possível sem justificar o motivo.
+- Acompanhante gratuito convidado pela gestante, experiência limitada, sem acesso automático a diário, cartas, fotos ou memórias privadas. Convite não equivale a autorização de leitura desses dados.
+- Resumo Semanal: recorte do catálogo publicado, semana atual, desenvolvimento, cuidado educativo e convite pessoal opcional. Preparar conceito para entrega futura por e-mail/WhatsApp, preferencialmente aos domingos, com preferência de horário/fuso e canal a definir. Não incluir conteúdos privados em mensagens por padrão. Não criar disparadores, assinaturas de canal ou automações nesta rodada.
+- Minha Jornada como diário/cápsula do tempo, com convites leves para pequenos registros pessoais, sempre opcionais.
+
+### Roadmap reservado, não autorizado nesta rodada
+
+Comunidade privada de gestantes inspirada em fórum/Reddit e com moderação; radar de notícias e pesquisas; indicação de outras gestantes; WhatsApp automatizado; pagamentos; campanhas de clínicas; experiência pós-parto de 90 dias; acompanhante; Resumo Semanal.
+
+### Limite desta implementação
+
+Somente: modo claro/escuro; acabamento da Home e Semana 20; referência visual do desenvolvimento fetal; arquitetura editorial 1–40; preparação visual das duas entradas públicas. Não avançar para Minha Jornada, Memórias, Cartas ou demais itens do roadmap. Preservar autenticação, RLS, multi-tenancy e fluxos aprovados.

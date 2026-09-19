@@ -2,7 +2,7 @@
 
 ## O que é
 
-Jornada da Gestante é uma plataforma criada para clínicas e empresas que atendem gestantes.
+Jornada da Gestante é uma plataforma para gestantes, acessível por assinatura direta ou por patrocínio de clínicas e parceiros.
 
 Ela combina:
 
@@ -21,7 +21,7 @@ O produto não é apenas um site e não é apenas um aplicativo.
 
 ## Para quem é vendido
 
-O cliente é a clínica, não a gestante.
+O modelo é híbrido: clínicas/parceiros patrocinam o acesso, e gestantes também poderão contratar diretamente.
 
 Pode ser vendido para:
 - clínicas de ultrassonografia;
@@ -81,7 +81,7 @@ A Jornada da Gestante:
 - não faz diagnóstico;
 - não é sistema de prescrição;
 - não é agenda médica completa;
-- não é ferramenta de WhatsApp automático;
+- não tem integração de WhatsApp nesta rodada; automação é roadmap futuro;
 - não deve parecer um ERP hospitalar.
 
 ## Modelo
@@ -121,3 +121,19 @@ Jatobá Sistemas.
 ## Domínio
 
 jornadadagestante.online
+
+## Evolução aprovada — 19/09/2026
+
+A Jornada oferece duas formas de acesso: patrocinado por clínica/parceiro e assinatura individual. A entrada pública prepara “Começar minha Jornada” e “Tenho acesso por uma clínica/parceiro”. Link, QR Code ou código de parceiro deverão reconhecer e vincular a clínica automaticamente, sem cobrança individual para o acesso patrocinado. O novo caminho direto e o resgate por código ainda não estão disponíveis.
+
+Planos individuais deverão ser configuráveis: referência mensal R$ 19,90; campanha de aproximadamente R$ 11/mês nos primeiros 3 meses; durações de 3, 6 e 9 meses; anual R$ 149–159. Nenhum gateway ou cobrança será integrado nesta rodada.
+
+Claro e escuro fazem parte do cuidado com a leitura. Cada identidade possui tokens light/dark, preferência inicial do sistema e escolha manual persistente.
+
+O Mapa Visual do Desenvolvimento do Bebê organiza a progressão das semanas 1–40. A Jatobá centraliza conteúdo, fontes e revisão profissional. A primeira referência é a Semana 20, sem fabricar informação para preencher outras semanas.
+
+Minha Jornada evoluirá como diário/cápsula do tempo, sem obrigação de registrar. Acompanhante gratuito poderá ser convidado, com experiência limitada e sem acesso automático a dados privados. A experiência poderá continuar até aproximadamente 90 dias após o nascimento.
+
+Resumo Semanal é o conceito de uma leitura breve com base em conteúdo publicado, preparada para e-mail/WhatsApp futuramente, preferencialmente aos domingos. Não há disparo nesta rodada.
+
+Roadmap, sem implementação agora: comunidade privada moderada; radar de notícias/pesquisas; indicação de gestantes; WhatsApp automatizado; pagamentos; campanhas de clínicas; pós-parto de 90 dias. O escopo imediato está na seção 31 do Prompt-Mestre.

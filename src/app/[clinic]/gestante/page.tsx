@@ -6,6 +6,7 @@ import {patientJourney} from '@/lib/patient-journey';
 import {contextualServices} from '@/lib/contextual-services';
 import {homeWeeks} from '@/content/home-weeks';
 import {publishedWeek} from '@/content/gestation-weeks';
+import {BabyDevelopmentMap} from '@/components/baby-development-map';
 export default async function Patient({params}:{params:Promise<{clinic:string}>}){
  const {clinic:slug}=await params;const {clinic,active,age,name,services}=await patientJourney(slug);
  const copy=age?homeWeeks[age.week]:undefined;
@@ -15,6 +16,7 @@ export default async function Patient({params}:{params:Promise<{clinic:string}>}
   <section className="home-welcome"><p className="eyebrow">Sua jornada, no seu tempo</p><h1>Olá, {name}.</h1><p className="home-lead">{age?`Vocês chegaram à semana ${age.week}.`:'Um espaço para o seu momento.'}</p><p className="muted">Um dia de cada vez. Há espaço para tudo o que você sente.</p></section>
   <GestationProgress age={age} dueDate={active?.due_date} hasActive={Boolean(active)}/>
   {age&&<p className="week-home-link"><Link href={`/${slug}/gestante/semana/${readingWeek}`}>{age.week===readingWeek?'Ler sobre a sua semana':`Leitura disponível: semana ${readingWeek}`} <span aria-hidden="true">↗</span></Link></p>}
+  {age&&<BabyDevelopmentMap currentWeek={age.week}/>}
   {age&&<><div className="home-heading"><h2>Um olhar para esta semana</h2><span>Para ler com calma</span></div>
   <div className="home-grid">
    <section className="home-card baby-card" aria-label="Seu bebê"><p className="eyebrow">01 · Seu bebê</p><h2>Pequenas mudanças,<br/>uma grande história.</h2><p>{copy?.baby??'O conteúdo desta semana está sendo preparado com cuidado. Seu pré-natal é o espaço para conversar sobre o desenvolvimento do bebê.'}</p>{copy&&<a className="home-source" href={copy.source} target="_blank" rel="noreferrer">Fonte: NHS · Semana {age!.week} (em inglês) ↗</a>}</section>

@@ -28,3 +28,7 @@ Define como interpretar logo, referências de interface, fotografia, cores e mat
 Depois de subir as fontes, use esta mensagem:
 
 “Use as fontes deste projeto como especificação oficial da Jornada da Gestante. O arquivo 01_PROMPT_MESTRE_V1.md é a autoridade principal de desenvolvimento; 03_REGRAS_FIXAS.md não pode ser contrariado. Não invente funcionalidades nem altere decisões sem minha autorização. Comece pela Etapa 1 do Prompt-Mestre. Primeiro apresente brevemente a arquitetura e o banco; depois implemente e teste.”
+
+## Atualização oficial de 19/09/2026
+
+As decisões aprovadas nesta data atualizam explicitamente o modelo exclusivamente B2B anterior. Leia a seção 31 do Prompt-Mestre, o conceito atualizado e as regras 61–70 antes de desenvolver. Etapa 1 permanece concluída; não reiniciar sua execução. A rodada atual da Etapa 2 limita-se a temas claro/escuro, acabamento Home/Semana 20, mapa visual de referência e preparação visual da entrada pública. Roadmap não constitui autorização de implementação.

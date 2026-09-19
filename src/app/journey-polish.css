@@ -1,0 +1,38 @@
+/* Editorial surfaces share semantic tokens in both color modes. */
+.development-map{margin-block:3rem 4rem;border-block:1px solid var(--border);padding-block:1.5rem 2rem;min-width:0}
+.development-heading{display:flex;justify-content:space-between;align-items:baseline;gap:.5rem 2rem;flex-wrap:wrap}
+.development-heading>span{font:italic .9rem Georgia,serif;color:var(--muted)}
+.development-editorial{display:grid;gap:2rem;align-items:center;margin-block:1rem 2rem}
+.development-editorial figure{margin:0;min-width:0}
+.baby-illustration{display:block;width:min(100%,330px);height:auto;margin:auto;color:var(--primary)}
+.baby-halo{fill:var(--primarySoft)}.baby-orbit{fill:none;stroke:var(--border);stroke-width:1.5}
+.baby-line{fill:none;stroke:currentColor;stroke-width:2}.baby-body{fill:var(--surface)}
+.development-editorial figcaption{color:var(--muted);font-size:.75rem;line-height:1.6;max-width:38ch;margin:.5rem auto 0;text-align:center}
+.development-edition{color:var(--secondary);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
+.development-copy h2{font-size:clamp(1.9rem,4vw,2.7rem);max-width:20ch;line-height:1.2;margin:.75rem 0 1rem}
+.development-copy>p:not(.development-edition):not(.form-note){line-height:1.8}
+.development-current{font-weight:600}.development-copy .form-note{margin:.35rem 0}
+.development-scale{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:.7rem .25rem}
+.development-scale li{display:flex;justify-content:center;align-items:center;min-width:0;font-size:.72rem;color:var(--muted)}
+.development-scale span{display:grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;border:1px solid var(--border);line-height:1}
+.development-scale li[data-reference=true] span{background:var(--primary);color:var(--onPrimary);border-color:var(--primary)}
+.development-scale li[aria-current=step] span{outline:2px solid var(--text);outline-offset:3px;font-weight:700;color:var(--text)}
+.development-scale li[data-reference=true][aria-current=step] span{color:var(--onPrimary)}
+.development-legend{font-size:.75rem;color:var(--muted);line-height:1.7;max-width:none;margin:1.3rem 0 0}
+.week-page .development-map{margin-top:0;margin-bottom:3.5rem}
+.patient-home .home-welcome h1{text-wrap:balance}
+.patient-home .home-grid{gap:2rem}
+.patient-home .home-card{border-radius:0}
+.patient-home .baby-card{padding-inline:0;background:var(--background);border:0;border-top:2px solid var(--secondary)}
+.patient-home .home-card[aria-label="Você"]{border:0;background:var(--background);padding-inline:0}
+.patient-home .observe-card{border:0;border-left:2px solid var(--secondary);padding:0 0 0 1.3rem;background:var(--background)}
+.patient-home .keep-card{padding:2rem;border:0;border-block:1px solid var(--border)}
+.patient-home .home-care{margin-top:3rem}
+.public-entry{width:min(100% - 2.8rem,1075px);margin:0 auto 3rem;border-top:1px solid var(--border);padding-top:2rem;overflow-wrap:anywhere}
+.public-entry>h2{font-size:clamp(2rem,5vw,3rem);max-width:24ch;margin:.8rem 0 2rem;text-wrap:balance}
+.entry-paths{display:grid;gap:2rem}.entry-paths section{padding-left:1.25rem;border-left:2px solid var(--border)}
+.entry-paths h3{font-size:1.55rem;max-width:24ch;margin:.75rem 0}.entry-number{font:italic 1.4rem Georgia,serif;color:var(--secondary)}
+.entry-login{display:inline-flex;align-items:center;min-height:48px;margin-top:1.5rem;color:var(--text)}
+#acesso-existente{scroll-margin-top:1.5rem}
+@media(min-width:740px){.development-editorial{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:3rem}.development-scale{grid-template-columns:repeat(20,minmax(0,1fr))}.entry-paths{grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem}.patient-home .home-grid{gap:3rem}.patient-home .keep-card{align-self:center}}
+@media(forced-colors:active){.development-scale li[data-reference=true] span{border-width:3px}.baby-line{stroke:CanvasText}.baby-body{fill:Canvas}.baby-halo{fill:Canvas}}

@@ -1,0 +1,10 @@
+/* Clinic-scoped aliases, no literal colors. System works before hydration. */
+:root,.theme-scope{--primary:var(--light-primary);--primarySoft:var(--light-primarySoft);--secondary:var(--light-secondary);--accent:var(--light-accent);--background:var(--light-background);--surface:var(--light-surface);--text:var(--light-text);--muted:var(--light-muted);--border:var(--light-border);--onPrimary:var(--light-onPrimary);--danger:var(--light-danger);--focus:var(--light-focus);color-scheme:light;}
+:root[data-color-mode=dark],:root[data-color-mode=dark] .theme-scope{--primary:var(--dark-primary);--primarySoft:var(--dark-primarySoft);--secondary:var(--dark-secondary);--accent:var(--dark-accent);--background:var(--dark-background);--surface:var(--dark-surface);--text:var(--dark-text);--muted:var(--dark-muted);--border:var(--dark-border);--onPrimary:var(--dark-onPrimary);--danger:var(--dark-danger);--focus:var(--dark-focus);color-scheme:dark;}
+@media(prefers-color-scheme:dark){:root:not([data-color-mode]),:root:not([data-color-mode]) .theme-scope{--primary:var(--dark-primary);--primarySoft:var(--dark-primarySoft);--secondary:var(--dark-secondary);--accent:var(--dark-accent);--background:var(--dark-background);--surface:var(--dark-surface);--text:var(--dark-text);--muted:var(--dark-muted);--border:var(--dark-border);--onPrimary:var(--dark-onPrimary);--danger:var(--dark-danger);--focus:var(--dark-focus);color-scheme:dark;}}
+.color-mode-picker{display:grid;grid-template-columns:auto auto;align-items:center;gap:.4rem .65rem}
+.color-mode-picker label{font-size:.75rem;color:var(--muted);font-weight:400}
+.color-mode-picker select{min-height:44px;padding:.4rem .6rem;font-size:.85rem;width:auto;max-width:10rem}
+.color-mode-picker small{grid-column:1/-1;max-width:25ch;font-size:.75rem}
+header{flex-wrap:wrap}header>div{min-width:0}header>.row{margin-left:auto}
+@media(max-width:420px){header>.row{width:100%;justify-content:space-between;margin:0}}
