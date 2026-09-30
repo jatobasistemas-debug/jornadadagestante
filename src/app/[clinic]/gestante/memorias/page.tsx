@@ -9,7 +9,7 @@ export default async function Memories({params,searchParams}:{params:Promise<{cl
  const filter=Object.hasOwn(memoryFilters,q.tipo??'')?q.tipo as keyof typeof memoryFilters:'todas';
  const page=journeyPage(q.pagina),offset=(page-1)*JOURNEY_PAGE_SIZE;
  const {db,user,clinic,pregnancy}=await journalContext(slug);
- let query=db.from('private_memories').select('id,category,body,occurred_on,gestational_week,storage_path,pregnancy_id').eq('user_id',user.id).eq('clinic_id',clinic.id);
+ let query=db.from('private_memories').select('id,category,body,occurred_on,gestational_week,storage_path,pregnancy_id').eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null');
  if(filter!=='todas')query=query.in('category',[...memoryFilters[filter]]);
  const result=await query.order('occurred_on',{ascending:false}).order('created_at',{ascending:false}).order('id',{ascending:false}).range(offset,offset+JOURNEY_PAGE_SIZE);
  if(result.error)throw new Error('Não foi possível carregar suas memórias.');

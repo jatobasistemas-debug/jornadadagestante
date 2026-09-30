@@ -12,21 +12,21 @@ export async function saveMemory(slug:string,editing:string|null,_:MemoryState,f
  if(editing){
   const {db,user,clinic,memory}=await ownedMemory(slug,editing);
   if(value.id!==editing||value.category!==memory.category)return {error:'O tipo deste registro não pode ser alterado.'};
-  const pregnancy=await db.from('pregnancies').select('due_date').eq('id',memory.pregnancy_id).eq('user_id',user.id).eq('clinic_id',clinic.id).single();
+  const pregnancy=await db.from('pregnancies').select('due_date').eq('id',memory.pregnancy_id).eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null').single();
   if(pregnancy.error)return {error:'Não foi possível conferir a gestação.'};
-  const saved=await db.from('private_memories').update(memoryValues(value,pregnancy.data.due_date)).eq('id',editing).eq('user_id',user.id).eq('clinic_id',clinic.id).select('id').single();
+  const saved=await db.from('private_memories').update(memoryValues(value,pregnancy.data.due_date)).eq('id',editing).eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null').select('id').single();
   if(saved.error)return {error:'Não foi possível salvar. Seu texto continua aqui.'};
  }else{
   const {db,user,clinic,pregnancy}=await journalContext(slug);
   if(!pregnancy)return {error:'Não há uma gestação ativa para novos registros.'};
-  const prior=await db.from('private_memories').select('id,body,category,occurred_on,pregnancy_id,storage_path').eq('id',value.id).eq('user_id',user.id).eq('clinic_id',clinic.id).maybeSingle();
+  const prior=await db.from('private_memories').select('id,body,category,occurred_on,pregnancy_id,storage_path').eq('id',value.id).eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null').maybeSingle();
   if(prior.error)return {error:'Não foi possível conferir o registro.'};
   if(prior.data&&((prior.data.body??'')!==value.body||prior.data.category!==value.category||prior.data.occurred_on!==value.date||prior.data.pregnancy_id!==pregnancy.id))return {error:'Este registro já existe. Abra-o em Memórias para editar.'};
   let path:string|null=null;
   let file:Awaited<ReturnType<typeof validateMemoryFile>>|undefined;
   if(hasAttachment(value.category)){
    try{file=await validateMemoryFile(form.get('file'),value.category);}catch(error){return {error:error instanceof Error?error.message:'Confira o arquivo.'};}
-   path=`${clinic.id}/${user.id}/${pregnancy.id}/${value.id}.${file.extension}`;
+   path=`${clinic.id??'personal'}/${user.id}/${pregnancy.id}/${value.id}.${file.extension}`;
   }
   if(prior.data&&prior.data.storage_path!==path)return {error:'Use o mesmo arquivo para concluir este envio.'};
   // Persist the owner-scoped reference BEFORE uploading: an interrupted upload
@@ -53,7 +53,7 @@ export async function deleteMemory(slug:string,id:string,_:MemoryState,form:Form
   const removed=await db.storage.from('private-memories').remove([memory.storage_path]);
   if(removed.error)return {error:'Não foi possível remover o arquivo. Tente novamente.'};
  }
- const removed=await db.from('private_memories').delete().eq('id',id).eq('user_id',user.id).eq('clinic_id',clinic.id).select('id').single();
+ const removed=await db.from('private_memories').delete().eq('id',id).eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null').select('id').single();
  if(removed.error)return {error:'A exclusão não terminou. Tente novamente para continuar.'};
  refresh(slug);redirect(`/${slug}/gestante/memorias?excluida=1`);
 }

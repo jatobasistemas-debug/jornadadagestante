@@ -1,0 +1,6 @@
+import {requireFeature} from '@/lib/features';
+import {PatientShell} from '@/components/patient-shell';
+import {ManageForm} from '@/components/manage-form';
+import {createReferral} from './actions';
+import {appUrl} from '@/lib/config';
+export default async function Page({params}:{params:Promise<{clinic:string}>}){const {clinic:slug}=await params;const {db,user,clinic}=await requireFeature(slug,'referrals');const [code,conversions]=await Promise.all([db.from('referral_codes').select('code').eq('user_id',user.id).maybeSingle(),db.from('referral_conversions').select('status,created_at').eq('referrer_id',user.id)]);if(code.error||conversions.error)throw new Error('Não foi possível carregar suas indicações.');const link=code.data?`${appUrl()}/comecar?indicacao=${code.data.code}`:null;return <PatientShell clinic={clinic} current="conta"><main id="conteudo" className="journey-page"><h1>Compartilhar a Jornada</h1><p>Se este espaço faz sentido para você, pode convidar outra gestante. Não há recompensa financeira.</p>{link?<label>Seu link<input value={link} readOnly onFocus={undefined}/></label>:<ManageForm action={createReferral.bind(null,slug)} fields={[]} label="Criar meu link"/>}<p>{conversions.data.length} cadastro(s) por indicação.</p></main></PatientShell>;}

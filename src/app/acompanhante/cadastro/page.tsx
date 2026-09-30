@@ -1,0 +1,4 @@
+import {BrandShell} from '@/components/brand-shell';
+import {ManageForm} from '@/components/manage-form';
+import {enrollCompanion} from '../actions';
+export default function Page(){return <BrandShell><main id="conteudo" className="content narrow"><h1>Uma conta para acompanhar</h1><p>Use o e-mail para o qual a gestante enviou o convite. O acesso de acompanhante é gratuito.</p><p><a href="/termos">Ler os termos</a> · <a href="/privacidade">Ler a política de privacidade</a></p><ManageForm action={enrollCompanion} fields={[{name:'full_name',label:'Nome',required:true},{name:'email',label:'E-mail',type:'email',required:true},{name:'password',label:'Senha (10 a 128 caracteres)',type:'password',required:true,max:128},{name:'terms',label:'Aceito os termos de uso',type:'checkbox'},{name:'privacy',label:'Aceito a política de privacidade',type:'checkbox'}]} label="Criar minha conta gratuita"/><a href="/auth/entrar">Já tenho conta</a></main></BrandShell>;}

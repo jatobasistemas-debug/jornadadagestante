@@ -19,8 +19,8 @@ export function memoryInput(form:FormData,today=journeyToday()) {
  return {data} as const;
 }
 export function memoryValues(value:{category:MemoryKind;date:string;body:string},dueDate:string){return {category:value.category,body:value.body||null,occurred_on:value.date,gestational_week:recordWeek(dueDate,value.date)};}
-export function ownedMemoryPath(path:string,clinicId:string,userId:string,pregnancyId:string){
- const prefix=`${clinicId}/${userId}/${pregnancyId}/`;
+export function ownedMemoryPath(path:string,clinicId:string|null,userId:string,pregnancyId:string){
+ const prefix=`${clinicId??'personal'}/${userId}/${pregnancyId}/`;
  return path.startsWith(prefix)&&/^[a-zA-Z0-9_-]+\.(png|jpg|jpeg|webp|pdf)$/.test(path.slice(prefix.length));
 }
 export async function validateMemoryFile(value:FormDataEntryValue|null,kind:MemoryKind){

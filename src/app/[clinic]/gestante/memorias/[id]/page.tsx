@@ -4,6 +4,7 @@ import {DeleteMemory} from '@/components/memory-form';
 import {ownedMemory} from '@/lib/memories-server';
 import {memoryKinds} from '@/lib/memories';
 import {recordDateLabel} from '@/lib/journey-records';
+import {MemoryPrivacy} from '@/components/memory-privacy';
 export const metadata={title:'Sua memória'};
 export default async function Memory({params,searchParams}:{params:Promise<{clinic:string;id:string}>;searchParams:Promise<{guardado?:string}>}){
  const {clinic:slug,id}=await params,q=await searchParams;
@@ -16,5 +17,6 @@ export default async function Memory({params,searchParams}:{params:Promise<{clin
   <article className={memory.category==='letter'?'memory-body memory-letter':'memory-body'}>{memory.body&&<p>{memory.body}</p>}</article>
   <div className="journey-form-actions"><Link href={`/${slug}/gestante/memorias/${id}/editar`}>Editar {memory.storage_path?'data e legenda':'registro'}</Link><Link href={`/${slug}/gestante/memorias`}>Voltar às memórias</Link></div>
   <DeleteMemory slug={slug} id={id}/>
+  <MemoryPrivacy slug={slug} id={id}/>
  </main></PatientShell>;
 }

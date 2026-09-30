@@ -5,15 +5,16 @@ import {ImageUpload} from '@/components/image-upload';
 import {ProfileForm} from '@/components/profile-form';
 import {recordDateLabel} from '@/lib/journey-records';
 import {gestation} from '@/lib/gestation';
+import {ProductLinks} from '@/components/product-links';
 export const metadata={title:'Perfil'};
 export default async function Account({params,searchParams}:{params:Promise<{clinic:string}>;searchParams:Promise<{imagem?:string}>}){
  const query=await searchParams;
  const notice=query.imagem==='atualizada'?'Foto atualizada.':query.imagem==='removida'?'Foto removida.':undefined;
  const {clinic:slug}=await params;const {db,user,clinic}=await requireClinic(slug,['patient']);
  const [consents,profile,pregnancies]=await Promise.all([
-  db.from('consent_records').select('document,version,accepted_at').eq('user_id',user.id).eq('clinic_id',clinic.id),
+  db.from('consent_records').select('document,version,accepted_at').eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null'),
   db.from('profiles').select('avatar_path,full_name,preferred_name').eq('user_id',user.id).single(),
-  db.from('pregnancies').select('id,due_date,last_menstrual_period,status').eq('user_id',user.id).eq('clinic_id',clinic.id).order('created_at',{ascending:false}),
+  db.from('pregnancies').select('id,due_date,last_menstrual_period,status').eq('user_id',user.id).filter('clinic_id',clinic.id===null?'is':'eq',clinic.id??'null').order('created_at',{ascending:false}),
  ]);
  if(consents.error||profile.error||pregnancies.error)throw new Error('Não foi possível carregar sua conta.');
  let avatar:string|null=null;
@@ -27,5 +28,6 @@ export default async function Account({params,searchParams}:{params:Promise<{cli
   <section><h2>Acesso à conta</h2><p>E-mail: {user.email}</p><a href="/auth/recuperar">Recuperar ou trocar minha senha</a></section>
   <section className="panel"><p>{user.email}</p><h2>Seus aceites</h2><ul>{consents.data.map(c=><li key={c.document}>{labels[c.document]}, versão {c.version}, aceito em {new Date(c.accepted_at).toLocaleDateString('pt-BR',{timeZone:'UTC'})}.</li>)}</ul><p><a href="/api/conta/exportar">Baixar meus dados</a></p><p><a href="/termos">Termos de uso</a> · <a href="/privacidade">Política de privacidade</a></p></section>
   <DeleteAccount slug={slug}/>
+  <ProductLinks slug={slug}/>
  </main></PatientShell>;
 }

@@ -16,7 +16,7 @@ export async function deleteAccount(slug:string,_:ActionState,form:FormData):Pro
  // All privileged storage operations are scoped to the freshly reauthenticated owner.
  // Remove objects before Auth deletion, as Supabase refuses deletion while objects remain.
  for(const pregnancy of pregnancies.data){
-  const prefix=`${pregnancy.clinic_id}/${user.id}/${pregnancy.id}`;
+  const prefix=`${pregnancy.clinic_id??'personal'}/${user.id}/${pregnancy.id}`;
   for(;;){
    const listed=await admin.storage.from('private-memories').list(prefix,{limit:1000,offset:0});
    if(listed.error)return {error:'A remoção dos arquivos não terminou. Tente novamente para continuar.'};

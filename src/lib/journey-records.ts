@@ -26,7 +26,7 @@ export function recordWeek(dueDate:string,date:string) {
   // Noon UTC keeps date-only input on the same calendar day in São Paulo.
   return gestation(dueDate,new Date(`${date}T12:00:00Z`))?.week ?? null;
 }
-export function recordPayload(form:FormData,context:{userId:string;clinicId:string;pregnancyId:string;dueDate:string},today=journeyToday()) {
+export function recordPayload(form:FormData,context:{userId:string;clinicId:string|null;pregnancyId:string;dueDate:string},today=journeyToday()) {
   const parsed=recordSchema(today).safeParse({id:form.get('id'),kind:form.get('kind'),text:form.get('text'),date:form.get('date')});
   if(!parsed.success) return {error:parsed.error.issues[0].message} as const;
   const value=parsed.data;

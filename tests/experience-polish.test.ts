@@ -68,11 +68,11 @@ test('map distinguishes illustrated week and actual pregnancy, without forced pr
   assert.equal(renderToStaticMarkup(createElement(BabyDevelopmentMap,{currentWeek:21,referenceWeek:21})), '');
 });
 
-test('public entry prepares both paths and only links to the existing login anchor', () => {
+test('public entry links to real individual and partner enrollment', () => {
   const html = renderToStaticMarkup(createElement(PublicEntry));
   assert.ok(html.includes('Começar minha Jornada'));
   assert.ok(html.includes('Tenho acesso por uma clínica/parceiro'));
-  assert.ok(html.includes('assinatura individual estará disponível em breve'));
-  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map(m=>m[1]), ['#acesso-existente']);
+  assert.ok(!html.includes('em breve'));
+  assert.deepEqual([...html.matchAll(/href="([^"]+)"/g)].map(m=>m[1]), ['/comecar','/parceiro','#acesso-existente']);
   assert.ok(!html.includes('<form') && !html.includes('<button'));
 });

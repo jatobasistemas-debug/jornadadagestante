@@ -1,0 +1,1 @@
+export function postpartumAge(bornAt:string,now=new Date()){const birth=new Date(bornAt);if(!Number.isFinite(birth.getTime())||birth>now)return null;const days=Math.floor((now.getTime()-birth.getTime())/86400000);return {days,week:Math.floor(days/7)+1,withinProgram:days<=90};}

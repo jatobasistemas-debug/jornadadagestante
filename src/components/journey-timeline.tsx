@@ -2,7 +2,7 @@ import {recordDateLabel,recordLabel,type JourneyRecord} from '@/lib/journey-reco
 import Link from 'next/link';
 
 export function JourneyTimeline({records,slug}:{records:JourneyRecord[];slug?:string}) {
-  return <ol className="journey-timeline" aria-label="Seus registros, do mais recente ao mais antigo">
+  return <ol className="journey-timeline" aria-label="Seus registros na ordem selecionada">
     {records.map(record=><li key={record.id} className={`journey-entry journey-entry-${record.category}`}>
       <article aria-labelledby={`record-${record.id}`}>
         <div className="journey-entry-date"><time dateTime={record.occurred_on}>{recordDateLabel(record.occurred_on)}</time>

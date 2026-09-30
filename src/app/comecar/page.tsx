@@ -1,0 +1,4 @@
+import {BrandShell} from '@/components/brand-shell';
+import {EnrollmentForm} from '@/components/enrollment-form';
+import {supabaseServer} from '@/lib/supabase/server';
+export default async function Start({searchParams}:{searchParams:Promise<{indicacao?:string}>}){const referral=(await searchParams).indicacao??'';const db=await supabaseServer();const result=await db.from('access_plans').select('code,name,price_cents,trial_days').eq('active',true).order('months');if(result.error)throw new Error('Não foi possível carregar os planos.');return <BrandShell><main id="conteudo" className="content narrow"><h1>Começar minha Jornada</h1><p>Seu espaço pessoal, sem precisar de uma clínica patrocinadora.</p><EnrollmentForm plans={result.data} referral={/^[a-f0-9]{24}$/.test(referral)?referral:''}/><p><a href="/auth/entrar">Já tenho uma conta</a></p></main></BrandShell>;}

@@ -1,0 +1,7 @@
+import {ManageForm} from '@/components/manage-form';
+import {cancelAccess} from './actions';
+import {BrandShell} from '@/components/brand-shell';
+import {RedeemForm} from '@/components/enrollment-form';
+import {requireUser} from '@/lib/access';
+import {accessLabels,effectiveStatus,AccessStatus} from '@/lib/subscriptions';
+export default async function Subscription(){const {db,user}=await requireUser();const result=await db.from('subscriptions').select('*,access_plans(name)').eq('user_id',user.id).maybeSingle();if(result.error)throw new Error('Não foi possível carregar o acesso.');const s=result.data;return <BrandShell signedIn><main id="conteudo" className="content narrow"><a href="/acesso">Voltar ao meu espaço</a><h1>Meu acesso</h1>{s?<section><h2>{accessLabels[effectiveStatus({status:s.status as AccessStatus,ends_at:s.ends_at})]}</h2><p>{s.access_plans?.name||'Acesso patrocinado'}</p><p>Início: {new Date(s.starts_at).toLocaleDateString('pt-BR')}</p>{s.ends_at&&<p>Fim: {new Date(s.ends_at).toLocaleDateString('pt-BR')}</p>}{s.status==='past_due'&&<p>A cobrança online ainda não está disponível. Nenhum pagamento foi realizado. Você pode ativar um código de parceiro abaixo.</p>}</section>:<p>Seu acesso atual é o da clínica à qual você está vinculada.</p>}{s&&s.status!=='cancelled'&&<ManageForm action={cancelAccess} fields={[{name:'confirm',label:'Encerrar meu acesso sem excluir meus registros',type:'checkbox',required:true}]} label="Encerrar acesso"/>}<h2>Tenho um código de parceiro</h2><RedeemForm/></main></BrandShell>;}
