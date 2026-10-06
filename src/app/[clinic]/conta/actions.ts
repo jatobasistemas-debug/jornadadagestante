@@ -1,7 +1,7 @@
  'use server';
-import {requireClinic} from '@/lib/access';import {deletionAdmin} from '@/lib/supabase/admin';import {redirect} from 'next/navigation';import type {ActionState} from '@/app/auth/actions';
+import {requireOwnAccount} from '@/lib/access';import {deletionAdmin} from '@/lib/supabase/admin';import {redirect} from 'next/navigation';import type {ActionState} from '@/app/auth/actions';
 export async function deleteAccount(slug:string,_:ActionState,form:FormData):Promise<ActionState>{
- const {db,user}=await requireClinic(slug,['patient']);
+ const {db,user}=await requireOwnAccount(slug);
  if(form.get('confirm')!=='on')return {error:'Confirme que deseja excluir sua conta e os registros.'};
  const password=String(form.get('password')||'');if(!password||password.length>128||!user.email)return {error:'Confirme sua senha.'};
  const verified=await db.auth.signInWithPassword({email:user.email,password});

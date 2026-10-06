@@ -4,9 +4,10 @@ import {gestation} from './gestation';
 export const recordKinds = {diary:'Diário', memory:'Memória', milestone:'Marco'} as const;
 export type RecordKind = keyof typeof recordKinds;
 export const timelineCategories = ['diary','memory','milestone','moment','photo','ultrasound','letter'];
+export const timelineFilters = [...timelineCategories,'birth','capsule'];
 export const RECORD_TEXT_LIMIT = 2000;
 export const JOURNEY_PAGE_SIZE = 20;
-export type JourneyRecord = {id:string; category:string; body:string|null; occurred_on:string; gestational_week:number|null};
+export type JourneyRecord = {id:string; category:string; body:string|null; occurred_on:string; gestational_week:number|null; is_capsule?:boolean; opens_on?:string|null};
 export type RecordFormState = {error?:string};
 
 export function journeyToday(now = new Date()) {
@@ -34,7 +35,7 @@ export function recordPayload(form:FormData,context:{userId:string;clinicId:stri
     category:value.kind,body:value.text,occurred_on:value.date,gestational_week:recordWeek(context.dueDate,value.date)}} as const;
 }
 export function recordLabel(category:string) {
-  return category==='moment' ? 'Memória' : ({photo:'Foto',ultrasound:'Ultrassom',letter:'Carta para o bebê'} as Record<string,string>)[category] ?? recordKinds[category as RecordKind] ?? 'Registro';
+  return category==='moment' ? 'Memória' : ({birth:'Nascimento',capsule:'Guardado para o futuro',photo:'Foto',ultrasound:'Ultrassom',letter:'Carta para o bebê'} as Record<string,string>)[category] ?? recordKinds[category as RecordKind] ?? 'Registro';
 }
 export function recordDateLabel(date:string) {
   return new Intl.DateTimeFormat('pt-BR',{timeZone:'UTC',day:'numeric',month:'long',year:'numeric'}).format(new Date(`${date}T12:00:00Z`));

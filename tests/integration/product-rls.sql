@@ -50,6 +50,17 @@ select set_config('request.jwt.claim.sub',(select mother::text from qa_product_c
 select public.save_journey_book('QA livro',array[(select memory from qa_product_context)]);
 insert into public.birth_records(pregnancy_id,user_id,born_at) select pregnancy,mother,now()-interval '2 days' from qa_product_context;
 update public.birth_records set name='QA bebê' where pregnancy_id=(select pregnancy from qa_product_context);
+insert into public.time_capsules(memory_id,user_id,opens_on) select memory,mother,current_date+1 from qa_product_context;
+do $$begin
+ if not exists(select 1 from public.journey_timeline((select clinic from qa_product_context),'birth') where id=(select pregnancy from qa_product_context)) then raise exception 'Timeline birth missing';end if;
+ if not exists(select 1 from public.journey_timeline((select clinic from qa_product_context),'capsule') where id=(select memory from qa_product_context) and is_capsule) then raise exception 'Timeline capsule missing';end if;
+end$$;
+select set_config('request.jwt.claim.sub',(select other::text from qa_product_context),true);
+do $$begin if exists(select 1 from public.journey_timeline((select clinic from qa_product_context)) where id in(select memory from qa_product_context union all select pregnancy from qa_product_context)) then raise exception 'Timeline exposes other owner';end if;end$$;
+select set_config('request.jwt.claim.sub',(select administrator::text from qa_product_context),true);
+do $$begin if exists(select 1 from public.journey_timeline((select clinic from qa_product_context))) then raise exception 'Clinic sees timeline';end if;end$$;
+select set_config('request.jwt.claim.sub',(select mother::text from qa_product_context),true);
+delete from public.time_capsules where memory_id=(select memory from qa_product_context);
 do $$declare selected_book uuid;begin
  selected_book:=public.save_book_selection(null,'QA nascimento',array[]::uuid[],(select pregnancy from qa_product_context));
  perform public.save_book_selection(selected_book,'QA edição',array[(select memory from qa_product_context)],null);

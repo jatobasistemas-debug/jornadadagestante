@@ -25,6 +25,35 @@ before(async()=>{
  await db.query("insert into storage.objects(bucket_id,name) values('private-memories',$1)",[`${a}/${ana}/${pregnancyA}/imagem.png`]);
 });
 after(async()=>{await db.close();});
+test('anonymous enrollment reads active plans including the ordering column',async()=>{const r=await as(null,tx=>tx.query('select code,name,price_cents,trial_days from public.access_plans where active order by months'),'anon');assert.ok(r.rows.some(p=>p.code==='monthly'));});
+test('timeline combines birth and capsules without exposing another owner or tenant',async()=>{
+ await db.exec("update public.feature_flags set enabled=true where key='postpartum'");
+ const id=(await as(ana,tx=>tx.query("insert into private_memories(clinic_id,user_id,pregnancy_id,category,body,occurred_on,gestational_week) values($1,$2,$3,'letter','Guardado para depois',current_date-3,20) returning id",[a,ana,pregnancyA]))).rows[0].id;
+ try {
+  await as(ana,tx=>tx.query('insert into time_capsules(memory_id,user_id,opens_on) values($1,$2,current_date+20)',[id,ana]));
+  await as(ana,tx=>tx.query("insert into birth_records(pregnancy_id,user_id,born_at,name) values($1,$2,now()-interval '1 day','Bebê de teste')",[pregnancyA,ana]));
+  const list=(await as(ana,tx=>tx.query('select * from journey_timeline($1)',[a]))).rows;
+  assert.ok(list.some(r=>r.id===pregnancyA&&r.category==='birth'));
+  assert.ok(list.some(r=>r.id===id&&r.is_capsule));
+  assert.deepEqual((await as(ana,tx=>tx.query("select id from journey_timeline($1,'capsule')",[a]))).rows,[{id}]);
+  assert.equal((await as(ana,tx=>tx.query("select * from journey_timeline($1,'letter',20,current_date-3,current_date-3)",[a]))).rows.length,1);
+  for(const u of [bia,admin,staff,otherAdmin,superadmin])assert.equal((await as(u,tx=>tx.query('select * from journey_timeline($1) where id in($2,$3)',[a,id,pregnancyA]))).rows.length,0);
+  assert.equal((await as(ana,tx=>tx.query('select * from journey_timeline($1)',[b]))).rows.length,0);
+  await assert.rejects(()=>as(null,tx=>tx.query('select * from journey_timeline($1)',[a]),'anon'));
+  for(const oldest of [true,false]){
+   const whole=(await as(ana,tx=>tx.query('select id from journey_timeline($1,null,null,null,null,$2)',[a,oldest]))).rows;
+   const first=(await as(ana,tx=>tx.query('select id from journey_timeline($1,null,null,null,null,$2,0,1)',[a,oldest]))).rows;
+   const rest=(await as(ana,tx=>tx.query('select id from journey_timeline($1,null,null,null,null,$2,1,100)',[a,oldest]))).rows;
+   assert.deepEqual([...first,...rest],whole);
+  }
+  await db.exec("update public.feature_flags set enabled=false where key='postpartum'");
+  assert.equal((await as(ana,tx=>tx.query("select * from journey_timeline($1,'birth')",[a]))).rows.length,0);
+ } finally {
+  await db.query('delete from public.birth_records where pregnancy_id=$1',[pregnancyA]);
+  await db.query('delete from public.private_memories where id=$1',[id]);
+  await db.exec("update public.feature_flags set enabled=false where key='postpartum'");
+ }
+});
 test('all public tables have RLS enabled',async()=>{const {rows}=await db.query<{relname:string}>('select relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname=\'public\' and c.relkind=\'r\' and not c.relrowsecurity');assert.deepEqual(rows,[]);});
 test('anonymous cannot query clinic tables',async()=>{await assert.rejects(()=>as(null,tx=>tx.query('select * from public.clinics'),'anon'));});
 test('public branding exposes only active clinic identity, never billing',async()=>{const {rows}=await as(null,tx=>tx.query("select public.get_public_clinic('vida-plena') as clinic"),'anon');assert.equal(rows[0].clinic.name,'Clínica Vida Plena');assert.ok(!('monthly_cents' in rows[0].clinic));assert.ok(!('plan_id' in rows[0].clinic));assert.equal(Object.keys(rows[0].clinic.tokens).length,12);});

@@ -8,7 +8,7 @@ export function JourneyTimeline({records,slug}:{records:JourneyRecord[];slug?:st
         <div className="journey-entry-date"><time dateTime={record.occurred_on}>{recordDateLabel(record.occurred_on)}</time>
           <span>{record.gestational_week===null?'Semana não estimada':`Semana ${record.gestational_week}`}</span></div>
         <div className="journey-entry-copy"><h2 id={`record-${record.id}`}>{recordLabel(record.category)}</h2>
-          <p>{record.body ? record.body.slice(0,2000)+(record.body.length>2000?'…':'') : 'Um momento guardado.'}</p>{slug&&<Link href={`/${slug}/gestante/memorias/${record.id}`}>Abrir registro</Link>}</div>
+          {record.is_capsule&&<p className="eyebrow">Guardado para o futuro{record.opens_on?` · ${recordDateLabel(record.opens_on)}`:''}</p>}<p>{record.body ? record.body.slice(0,2000)+(record.body.length>2000?'…':'') : 'Um momento guardado.'}</p>{slug&&<Link href={record.category==='birth'?`/${slug}/gestante/nascimento`:`/${slug}/gestante/memorias/${record.id}`}>Abrir registro</Link>}</div>
       </article>
     </li>)}
   </ol>;

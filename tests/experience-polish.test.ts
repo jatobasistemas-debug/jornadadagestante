@@ -10,6 +10,11 @@ import { developmentWeeks, developmentWeek } from '../src/content/development-ma
 import { gestationWeeks } from '../src/content/gestation-weeks';
 import { BabyDevelopmentMap } from '../src/components/baby-development-map';
 import { PublicEntry } from '../src/components/public-entry';
+test('companion map navigates all forty weeks without linking to a patient route',()=>{
+ const html=renderToStaticMarkup(createElement(BabyDevelopmentMap,{currentWeek:20,companion:true}));
+ for(let week=1;week<=40;week++)assert.ok(html.includes(`href="/acompanhante/semana/${week}"`));
+ assert.ok(!html.includes('/gestante/semana/'));
+});
 
 test('clinic themes remain independent in light and dark without mutating the saved palette', () => {
   const horizon = {...defaultTheme, primary:'#315D58', secondary:'#675980'};

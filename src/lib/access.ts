@@ -20,6 +20,7 @@ export async function requireUser(){
  if(error||!user) redirect('/?acesso=necessario');
  return {db,user};
 }
+export async function requireOwnAccount(slug:string){return slug?requireClinic(slug,['patient']):requireUser();}
 export async function requireClinic(slug:string,allowed:readonly string[]){
  if(slug==='pessoal'){
   if(!allowed.includes('patient'))notFound();

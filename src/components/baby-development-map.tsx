@@ -15,7 +15,7 @@ function Week20Illustration() {
   </svg>;
 }
 
-export function BabyDevelopmentMap({ currentWeek, referenceWeek = 20,slug }: { currentWeek: number | null; referenceWeek?: number;slug?:string }) {
+export function BabyDevelopmentMap({ currentWeek, referenceWeek = 20,slug,companion=false }: { currentWeek: number | null; referenceWeek?: number;slug?:string;companion?:boolean }) {
   const titleId = useId();
   const reference = developmentWeek(referenceWeek);
   if (!reference?.visual || !reference.content) return null;
@@ -39,9 +39,9 @@ export function BabyDevelopmentMap({ currentWeek, referenceWeek = 20,slug }: { c
       {developmentWeeks.map(entry => <li key={entry.week} aria-current={actualWeek === entry.week ? 'step' : undefined}
         data-reference={entry.week === referenceWeek ? 'true' : undefined}
         aria-label={`Semana ${entry.week}${actualWeek === entry.week ? ', sua semana atual' : ''}${entry.week === referenceWeek ? ', referência ilustrada' : ''}`}>
-        {slug?<a href={`/${slug}/gestante/semana/${entry.week}`} aria-label={`Ler semana ${entry.week}`}>{entry.week}</a>:<span>{entry.week}</span>}
+        {(slug||companion)?<a href={companion?`/acompanhante/semana/${entry.week}`:`/${slug}/gestante/semana/${entry.week}`} aria-label={`Ler semana ${entry.week}`}>{entry.week}</a>:<span>{entry.week}</span>}
       </li>)}
     </ol>
-    <p className="development-legend">Semana {referenceWeek}: referência ilustrada.{actualWeek && actualWeek <= 40 ? ` Semana ${actualWeek}: seu momento, marcado com contorno.` : ''} {slug?'Toque em uma semana para explorar.':''}</p>
+    <p className="development-legend">Semana {referenceWeek}: referência ilustrada.{actualWeek && actualWeek <= 40 ? ` Semana ${actualWeek}: seu momento, marcado com contorno.` : ''} {(slug||companion)?'Toque em uma semana para explorar.':''}</p>
   </section>;
 }
